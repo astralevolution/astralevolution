@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+	<meta property="og:title" content="shuttle" />
+	<meta property="og:description" content="shuttle, the fastest browser." />
+	<meta property="og:image" content="/shuttle.png" />
+	<meta name="theme-color" content="#000000" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="English" />
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
+
+	<title>Astral Evolution</title>
+
+	<link rel="stylesheet" href="index.css" />
+
+	<script src="https://kit.fontawesome.com/be27c0ad9d.js" crossorigin="anonymous"></script>
+	<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+	<script src="uv/uv.bundle.js"></script>
+	<script src="uv/uv.config.js"></script>
+
+	<script src="index.js" defer></script>
+	<script src="/assets/js/particles.js" defer></script>
+	<script src="/assets/js/cursor.js" defer></script>
+
+	<!-- Google tag (gtag.js) -->
+
+
+
+</head>
+
+<body>
+<div class="sidebar">
+
+		<a href="/" id="logo">
+		</a>
+<a href="/" class="nav-active"><span>Home</span></a> <a href="/discord.html" class="nav-btn"><span>Chat</span></a> <a href="/apps.html" class="nav-btn"><span>Apps</span></a><a href="/nowgg.html" class="nav-btn"><span>Now.gg</span></a>
+<a id="time" class="nav-btn" style="display: flex; justify-content: flex-end; margin-left: auto;"></a>
+	</div>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+	<div id="align">
+	<nav id="nav">
+		<a onclick="exit()">
+			<i class="fa-solid fa-xmark"
+				style="color: white; margin-right: auto; margin-left: 20px; font-size: 24px;"></i>
+		</a>
+		<span id="m" style="margin: auto;"></span>
+		<a onclick="fullscreen()">
+			<i class="fa-solid fa-expand"
+				style="color: white; margin-left: auto; margin-right: 45px; font-size: 20px;"></i>
+		</a>
+	</nav>
+	<iframe id="ifr"></iframe>
+</div>
+
+<div class="alignment-container-1" style="margin-top:15%;">
+	<div class="header-container">
+      <div class="logo-image">
+        <img>
+      </div>
+		<h2 style="font-family: Pacifico;" class="gradient-text"><span >Astral Evolution</span></h2>
+	</div>
+	<form id="form">
+		<input autofocus autocomplete="off" class="search" id="search" placeholder="URL Or Search" required/>
+		<button type="submit" class="submit-button">
+			<i class="fas fa-search searchicon"></i>
+		</button>
+	</form>
+	<div id="suggestions"></div>
+
+
+
+    
+	<footer>
+	</footer>
+</div>
+<script src="/assets/js/home.js"></script>
+<script>
+const searchInput = document.getElementById('search');
+let debounceTimeout;
+let isRequestPending = false;
+
+function proxy(url) {
+    // Your proxy logic here
+    document.getElementById("align").style.display = "flex";
+    document.querySelector(".sidebar").style.display = "none";
+    registerSW().then(worker => {
+        if (!worker) {
+            return msg.innerHTML = "Error: Your browser does not support service workers or is blocking them (private browsing mode?), try using a different browser";
+        }
+        frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
+    });
+}
+
+function fetchResults(searchText) {
+    const url = `https://search.astralevolution.online/search?query=${encodeURIComponent(searchText)}`;
+
+    // Set the request flag to true
+
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            isRequestPending = false;
+            if (Array.isArray(data)) {
+                const suggestions = document.getElementById("suggestions");
+                suggestions.innerHTML = '';
+                data.forEach(result => {
+                    const suggestionItem = document.createElement('div');
+                    const suggestionLink = document.createElement('a');
+                    suggestionItem.classList=["suggestions"];
+
+                    suggestionLink.href = result.link;
+
+                    const displayedTitle = result.title.length > 23 ? result.title.slice(0, 23) + "..." : result.title;
+                    suggestionLink.textContent = displayedTitle;
+
+                    suggestionLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        proxy(result.link);
+                    });
+
+                    suggestionItem.appendChild(suggestionLink);
+                    suggestions.appendChild(suggestionItem);
+                });
+		
+            } else {
+                console.log('Error: Invalid response format');
+            }
+        })
+        .catch(error => {
+            isRequestPending = false;
+            console.error('Error:', error);
+        });
+}
+
+searchInput.addEventListener('input', function (event) {
+    clearTimeout(debounceTimeout); 
+    const searchText = event.target.value;
+
+    debounceTimeout = setTimeout(() => {
+        if (searchText.length >= 2) {
+            fetchResults(searchText);
+            unfade(suggestions)
+        }
+        if (searchText.length < 3) {
+            // Hide suggestions when text length is less than 3
+            document.getElementById("suggestions").style.display = "none";
+        } else {
+            document.getElementById("suggestions").style.display = "block";
+        }
+    }, 300); 
+});
+</script>
+<script>
+const form2 = document.getElementById('form');
+
+searchInput.addEventListener('input', function (event) {
+    const searchText = event.target.value;
+
+    //If there's text in the search bar, set focus to the #form element
+    if (searchText.trim().length > 0) {
+        form2.focus();
+    }
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function unfade(element) {
+    var op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 10);
+}
+</script>
+<script>
+    var themecolor = localStorage.getItem("themehex");
+    
+    if (!/^#([0-9A-F]{3}){1,2}$/i.test(themecolor)) {
+        themecolor = "#0b0b0b"; 
+    }
+    
+    document.body.style.backgroundColor = themecolor;
+</script>
+
+        <svg height="100%" width="100%" style="position: fixed; z-index: 0;"></svg>
+
+</body>
+
+</html>
+<script>
+function updateTime() {
+    var currentTime = new Date();
+
+    var year = currentTime.getFullYear();
+    var month = currentTime.getMonth() + 1; // Months are zero-based
+    var day = currentTime.getDate();
+
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = (hours % 12) || 12;
+
+    month = (month < 10 ? "0" : "") + month;
+    day = (day < 10 ? "0" : "") + day;
+    hours = (hours < 10 ? "0" : "") + hours;
+    minutes = (minutes < 10 ? "0" : "") + minutes;
+    seconds = (seconds < 10 ? "0" : "") + seconds;
+
+    document.getElementById("time").innerHTML = year + "/" + month + "/" + day + " " + hours + ":" + minutes + ":" + seconds + " " + ampm;
+}
+
+setInterval(updateTime, 1000);
+</script>
+<script>
+function initTheme() {
+  const savedTheme = localStorage.getItem("themehex");
+  if (savedTheme) {
+    document.body.style.backgroundColor = savedTheme;
+    document.querySelector('#colorPicker').value = savedTheme;
+  }
+}
+
+window.addEventListener('load', initTheme);
+</script>
+<style>
+    /* Define the gradient text */
+    .gradient-text {
+      background-image: linear-gradient(to right, black, white, black);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 35px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+  
