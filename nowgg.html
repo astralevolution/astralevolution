@@ -109,8 +109,260 @@ window.addEventListener('load', initTheme);
 	</div>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
-	<iframe id="ifr" src="https://nowgg.astral-evolution.repl.co?embed=true"></iframe>
+<!DOCTYPE html>
+<html>
 
+<head>
+  <title>Astral Evolution - Now.gg</title>
+  <link rel="stylesheet" href="index.css">
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
+
+</head>
+
+<body>
+  <script>
+
+    //Are you looking here to copy and paste the source code? Yep, thats what I thought.
+
+    function encode(str) {
+      if (!str) return str;
+      return encodeURIComponent(
+        Array.from(str)
+          .map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt(0) ^ 2) : char)
+          .join('')
+      );
+    }
+    function LoadNowgg() {
+      var nggurlInput = document.getElementById("nggurl");
+      var nggurlValue = nggurlInput.value;
+      var regex = /https:\/\/now\.gg\/(?:apps|play)\/(.+)\/([0-9]+)\/(.+)/;
+
+      if (regex.test(nggurlValue)) {
+        var encodedUrl = encode(nggurlValue);
+        var myVariable = "https://beta7.caculatorgeo.one/uv_edit/education/" + encodedUrl;
+
+        var iframe = document.createElement("iframe");
+        iframe.src = myVariable;
+        iframe.frameborder = "0";
+        iframe.marginheight = "0";
+        iframe.marginwidth = "0";
+        iframe.width = "100%";
+        iframe.height = "100%";
+        iframe.scrolling = "auto";
+
+        document.body.innerHTML = '';
+        document.head.innerHTML = '<link rel="stylesheet" href="/assets/css/style.css" /><link rel="stylesheet" href="/assets/css/cookie.css"><style type="text/css">html,body,div,iframe{margin:0;padding:0;height:100%;border:none}iframe{display:block;width:100%;border:none;overflow-y:auto;overflow-x:hidden}</style>';
+        document.body.appendChild(iframe);
+      }
+      else {
+        alert("Invalid URL! Please provide a valid Now.gg URL. (Use https:// at the start of your URL!)");
+      }
+    }
+
+  </script>
+
+
+  <style>
+    body {
+      background-image: url("https://cdn.astralevolution.pro/uploads/file_6.png");
+      background-size: cover;
+      font-family: cursive;
+    }
+
+    .fl {
+      font-family: cursive;
+      font-size: 1.2rem;
+      margin-left: 2rem;
+      margin-top: 0.7rem;
+      display: block;
+      transition: all 0.3s;
+      transform: translateY(0);
+    }
+
+    .fi {
+      font-family: cursive;
+      color: #333;
+      font-size: 1.2rem;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-radius: 0.2rem;
+      background-color: #fff;
+      border: 2px solid #000;
+      width: 90%;
+      height: auto;
+      display: block;
+      transition: all 0.3s;
+    }
+
+    .fi:placeholder-shown+.fl {
+      opacity: 0;
+      visibility: hidden;
+      -webkit-transform: translateY(-4rem);
+      transform: translateY(-4rem);
+    }
+
+    #urlInput {
+      font-family: cursive;
+      font-size: 1.2rem;
+      color: #333;
+      margin: auto;
+      width: 80%;
+      padding: 10px;
+      height: 100%;
+      text-align: center;
+    }
+  </style>
+  <style>
+    .white-text {
+      color: white;
+    }
+  </style>
+
+  <script>
+    function replaceBodyContentRoblox() {
+      document.body.innerHTML = '<style type="text/css">html,body,div,iframe{margin:0;padding:0;height:100%;border:none}iframe{display:block;width:100%;border:none;overflow-y:auto;overflow-x:hidden}</style></head><a href="/"></a></div><body><iframe src="https://login.algebra.lol/ultraviolet/hvtrs8%2F-nmw%2Cge%2Frlcy-rmbnoz-aoppmrctkol%2F7369-rmbnoz" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe></body></html>';
+    }
+  </script>
+
+
+  <div id="urlInput">
+    <br />
+    <header style="font-family: Pacifico">Now.gg Bypass (Temporarily Down)</header>
+    <br />
+    <form onsubmit="return urlSubmit()">
+      <div style="display: flex; align-items: center;">
+        <input class="fi" id="nggurl" placeholder="Enter a valid Now.gg URL here to play the game." required />
+        <button class="bbutton" style="font-family: cursive;
+                  color: #fff;
+                  font-size: 1.2rem;
+                  margin: 0 auto;
+                  padding: 1.5rem 2rem;
+                  border-radius: 0.2rem;
+                  background-color: #000;
+                  border: 2px solid #000;
+                  height: auto;
+                  display: block;
+                  transition: all 0.3s;
+                  " onmouseover="this.style.color='#333'" onmouseout="this.style.color='#fff'" onclick="LoadNowgg()">
+          Play!
+        </button>
+      </div>
+    </form>
+    <p style="color: red; font-family: Pacifico " id="invalid-link"></p>
+
+  </div>
+
+</html>
+
+
+
+
+
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: cursive;
+    background-image: url("https://cdn.astralevolution.pro/uploads/file_6.png");
+    background-size: cover;
+  }
+
+  header {
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 2px 2px #000;
+  }
+
+  nav {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    text-shadow: 1px 1px #000;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+  }
+
+  nav a:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+  }
+
+  section {
+    padding: 50px;
+    text-align: center;
+    font-size: 35px;
+    line-height: 1.5;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+  }
+
+  footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    text-shadow: 1px 1px #000;
+  }
+
+  iframe {
+    width: 100%;
+    height: 900px;
+    margin-top: 50px;
+  }
+</style>
+<style>
+  .bbutton {
+    background: linear-gradient(to bottom, #4da6ff, #ffffff);
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 1, 0.3);
+    cursor: pointer;
+    font-family: 'Pacifico', cursive;
+  }
+</style>
+<style>
+  .foot {
+    margin-top: 15px;
+  }
+</style>
+<style>
+  .bbuttona {
+    background: linear-gradient(to bottom, #4b4b4b 0%, #2b2b2b 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+
+  .bbutton:hover {
+    background: #2b2b2b;
+  }
+</style>
+<script src="/assets/js/abc.js"></script>
+<div class="background"></div>
+</body>
+
+</html>
 
         <svg height="100%" width="100%" style="position: fixed; z-index: 0;"></svg>
 
