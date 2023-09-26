@@ -24,4 +24,4 @@
   </website>
 </profile>
 ```
-<img src="https://komarev.com/ghpvc/?username=astralevolution&label=People who saw this:&color=000000&style=flat" />
+<img src="https://komarev.com/ghpvc/?username=astralevolution&label=Amount of people who saw this:&color=000000&style=flat" />
