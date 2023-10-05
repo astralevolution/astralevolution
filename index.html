@@ -86,94 +86,77 @@
 </div>
 <script src="/assets/js/home.js"></script>
 <script>
-const searchInput = document.getElementById('search');
-let debounceTimeout;
-let isRequestPending = false;
-
-function proxy(url) {
-    // Your proxy logic here
-    document.getElementById("align").style.display = "flex";
-    document.querySelector(".sidebar").style.display = "none";
-    registerSW().then(worker => {
-        if (!worker) {
-            return msg.innerHTML = "Error: Your browser does not support service workers or is blocking them (private browsing mode?), try using a different browser";
-        }
-        frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
-    });
-}
-
-function fetchResults(searchText) {
-    const url = `https://ac.astralevolution.online/search?query=${encodeURIComponent(searchText)}`;
-
-    // Set the request flag to true
-
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            isRequestPending = false;
-            if (Array.isArray(data)) {
-                const suggestions = document.getElementById("suggestions");
-                suggestions.innerHTML = '';
-                data.forEach(result => {
-                    const suggestionItem = document.createElement('div');
-                    const suggestionLink = document.createElement('a');
-                    suggestionItem.classList=["suggestions"];
-
-                    suggestionLink.href = result.link;
-
-                    const displayedTitle = result.title.length > 23 ? result.title.slice(0, 23) + "..." : result.title;
-                    suggestionLink.textContent = displayedTitle;
-
-                    suggestionLink.addEventListener('click', function(event) {
-                        event.preventDefault();
-                        proxy(result.link);
+    const searchInput = document.getElementById('search');
+    let debounceTimeout;
+    let isRequestPending = false;
+    
+    function fetchResults(searchText) {
+        const url = `https://search.shuttle.rip/ac/?q=${encodeURIComponent(searchText)}`;
+    
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                isRequestPending = false;
+                if (Array.isArray(data)) {
+                    const suggestions = document.getElementById("suggestions");
+                    suggestions.innerHTML = '';
+                    data.forEach(result => {
+                        const suggestionItem = document.createElement('div');
+                        const suggestionLink = document.createElement('a');
+                        suggestionItem.classList=["suggestions"];
+    
+                        suggestionLink.href = result.phrase;
+    
+                        const displayedTitle = result.phrase.length > 23 ? result.phrase.slice(0, 23) + "..." : result.phrase;
+                        suggestionLink.textContent = displayedTitle;
+    
+                        suggestionLink.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            proxy(`https://www.google.com/search?&q=${result.phrase}`);
+                        });
+    
+                        suggestionItem.appendChild(suggestionLink);
+                        suggestions.appendChild(suggestionItem);
                     });
-
-                    suggestionItem.appendChild(suggestionLink);
-                    suggestions.appendChild(suggestionItem);
-                });
-		
-            } else {
-                console.log('Error: Invalid response format');
-            }
-        })
-        .catch(error => {
-            isRequestPending = false;
-            console.error('Error:', error);
-        });
-}
-
-searchInput.addEventListener('input', function (event) {
-    clearTimeout(debounceTimeout); 
-    const searchText = event.target.value;
-
-    debounceTimeout = setTimeout(() => {
-        if (searchText.length >= 2) {
-            fetchResults(searchText);
-            unfade(suggestions)
-        }
-        if (searchText.length < 3) {
-            // Hide suggestions when text length is less than 3
-            document.getElementById("suggestions").style.display = "none";
-        } else {
-            document.getElementById("suggestions").style.display = "block";
-        }
-    }, 300); 
-});
-</script>
-<script>
-const form2 = document.getElementById('form');
-
-searchInput.addEventListener('input', function (event) {
-    const searchText = event.target.value;
-
-    //If there's text in the search bar, set focus to the #form element
-    if (searchText.trim().length > 0) {
-        form2.focus();
+            
+                } else {
+                    console.log('Error: Invalid response format');
+                }
+            })
+            .catch(error => {
+                isRequestPending = false;
+                console.error('Error:', error);
+            });
     }
-});
-</script>
+    
+    searchInput.addEventListener('input', function (event) {
+        clearTimeout(debounceTimeout); 
+        const searchText = event.target.value;
+    
+        debounceTimeout = setTimeout(() => {
+            if (searchText.length >= 1) {
+                fetchResults(searchText)
+            }
+            if (searchText.length < 1) {
+    
+                document.getElementById("suggestions").style.display = "none";
+            } else {
+                document.getElementById("suggestions").style.display = "block";
+            }
+        }, 100); 
+    });
+    </script>
+    <script>
+    const form2 = document.getElementById('form');
+    
+    searchInput.addEventListener('input', function (event) {
+        const searchText = event.target.value;
+    
+        if (searchText.trim().length > 0) {
+            form2.focus();
+        }
+    });
+    </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 function unfade(element) {
@@ -255,3 +238,20 @@ window.addEventListener('load', initTheme);
     }
   </style>
   
+<script>
+async function registerSW() {
+
+  const workerURL = "./sw.js";
+  const worker = await navigator.serviceWorker.getRegistration(workerURL, {
+    scope: __uv$config.prefix,
+  });
+  return navigator.serviceWorker.register(workerURL, { scope: __uv$config.prefix });
+}
+function proxy(url) {
+	registerSW().then(worker => {
+
+		window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+	});
+}
+
+</script>
