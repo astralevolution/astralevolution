@@ -1,4 +1,13 @@
+<script src="uv/uv.bundle.js"></script>
+<script src="uv/uv.config.js"></script>
+<script>
+function proxy(url) {
+	registerSW().then(worker => {
 
+		window.location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+	});
+}
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +20,7 @@
 
   gtag('config', 'G-80Z85T1CHK');
 </script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-	<meta property="og:title" content="shuttle" />
-	<meta property="og:description" content="shuttle, the fastest browser." />
-	<meta property="og:image" content="/shuttle.png" />
-	<meta name="theme-color" content="#000000" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="English" />
+
 
 	<title>Astral Evolution</title>
 
@@ -89,13 +92,7 @@ window.addEventListener('load', initTheme);
 <html>
 <head>
 	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-	<meta property="og:title" content="shuttle" />
-	<meta property="og:description" content="shuttle, the fastest browser." />
-	<meta property="og:image" content="/shuttle.png" />
-	<meta name="theme-color" content="#000000" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="English" />
+
 
 	<title>Astral Evolution</title>
 
@@ -167,13 +164,7 @@ window.addEventListener('load', initTheme);
 <html>
 <head>
 	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-	<meta property="og:title" content="shuttle" />
-	<meta property="og:description" content="shuttle, the fastest browser." />
-	<meta property="og:image" content="/shuttle.png" />
-	<meta name="theme-color" content="#000000" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="English" />
+
 
 	<title>Astral Evolution</title>
 
