@@ -4,7 +4,7 @@
 ```html
 <profile>
   <discord_username>
-    @astral.evolution
+    @astralevolution
   </discord_username>
   <intrests>
     Programming
